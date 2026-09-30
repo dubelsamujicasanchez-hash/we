@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Licorería Maracuyá</title>
+
+    <style>
+        /* ===========================
+           CONFIGURACIÓN GENERAL
+        =========================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+
+        /* ===========================
+           ENCABEZADO
+        =========================== */
+
+        header {
+            background: linear-gradient(135deg, #b36b00, #00e6c7);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+        }
+
+        header > div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        header img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+        }
+
+        header h1 {
+            font-size: 32px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            margin-top: 10px;
+            font-size: 20px;
+            font-style: italic;
+            color: white;
+        }
+
+
+        /* ===========================
+           MENÚ DE NAVEGACIÓN
+        =========================== */
+
+        nav {
+            background-color: #e6e200;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            display: block;
+            color: black;
+            text-decoration: none;
+            padding: 16px 25px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #0ac70a;
+            color: white;
+        }
+
+
+        /* ===========================
+           INICIO - GALERÍA
+        =========================== */
+
+        #inicio {
+            padding: 40px 5% 100px;
+            background-color: #222;
+        }
+
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .galeria img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
+            transition: 0.4s;
+        }
+
+        .galeria img:hover {
+            transform: scale(1.05);
+        }
+
+
+        /* ===========================
+           SECCIONES
+        =========================== */
+
+        section {
+            padding: 50px 8%;
+        }
+
+        section h2 {
+            text-align: center;
+            color: #1700e6;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        section h2::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #f5c400;
+            margin: 10px auto;
+            border-radius: 5px;
+        }
+
+
+        /* ===========================
+           SOBRE NOSOTROS
+        =========================== */
+
+        #nosotros {
+            background-color: #00d7e6;
+        }
+
+        #nosotros p {
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+            font-size: 18px;
+        }
+
+
+        /* ===========================
+           PRODUCTOS
+        =========================== */
+
+        #productos {
+            background-color: #f0a9d2;
+        }
+
+        .productos {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+
+        /* ===========================
+           TARJETAS
+        =========================== */
+
+        article {
+            position: relative;
+            background-color: #dcb273;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            transition: 0.3s;
+        }
+
+        article:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        article > img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+
+        /* ===========================
+           ETIQUETA DEL PRODUCTO
+        =========================== */
+
+        .etiqueta {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background-color: #1700e6;
+            color: #e6e200;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+
+        /* ===========================
+           INFORMACIÓN DEL PRODUCTO
+        =========================== */
+
+        .informacion {
+            padding: 20px;
+        }
+
+        article h3 {
+            color: #1700e6;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        article p {
+            font-size: 15px;
+            color: #080807;
+            margin-bottom: 15px;
+        }
+
+
+        /* ===========================
+           PRECIO
+        =========================== */
+
+        .precio {
+            display: inline-block;
+            font-size: 20px;
+            font-weight: bold;
+            color: #1700e6;
+            margin-right: 15px;
+        }
+
+
+        /* ===========================
+           BOTÓN PEDIR
+        =========================== */
+
+        .btn-pedir {
+            display: inline-block;
+            background-color: #25d366;
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-pedir:hover {
+            background-color: #128c7e;
+            transform: scale(1.05);
+        }
+
+
+        /* ===========================
+           CONTACTO
+        =========================== */
+
+        #contactos {
+            background-color: #00d7e6;
+            text-align: center;
+        }
+
+        #contactos iframe {
+            max-width: 100%;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        #contactos a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #1700e6;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+        }
+
+        #contactos a:hover {
+            background-color: #0ac70a;
+        }
+
+
+        /* ===========================
+           FOOTER
+        =========================== */
+
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        footer h3 {
+            margin-bottom: 15px;
+        }
+
+        footer a {
+            color: white;
+            margin: 10px;
+        }
+
+
+        /* ===========================
+           DISEÑO RESPONSIVO
+        =========================== */
+
+        @media (max-width: 900px) {
+
+            .galeria {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .productos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            .galeria {
+                grid-template-columns: 1fr;
+            }
+
+            .productos {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav a {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- ===========================
+         ENCABEZADO
+    ============================ -->
+
+    <header>
+
+        <div>
+
+            <img src="img/logo.png" alt="Logo de Licorería Maracuyá">
+
+            <h1>LICORERÍA MARACUYÁ</h1>
+
+        </div>
+
+        <p>
+            REFRESCA LA VIDA CON BEBIDAS EXÓTICAS
+        </p>
+
+    </header>
+
+
+    <!-- ===========================
+         MENÚ
+    ============================ -->
+
+    <nav>
+
+        <ul>
+
+            <li>
+                <a href="#inicio">Inicio</a>
+            </li>
+
+            <li>
+                <a href="#nosotros">Nosotros</a>
+            </li>
+
+            <li>
+                <a href="#productos">Productos</a>
+            </li>
+
+            <li>
+                <a href="#contactos">Contactos</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- ===========================
+         INICIO
+    ============================ -->
+
+    <section id="inicio">
+
+        <div class="galeria">
+
+            <div>
+                <img src="img/maracuya.jpeg" alt="Maracuyá">
+            </div>
+
+            <div>
+                <img src="img/fruta.jpeg" alt="Frutas tropicales">
+            </div>
+
+            <div>
+                <img src="img/flores.jpeg" alt="Flores">
+            </div>
+
+            <div>
+                <img src="img/plato a la carta.jpeg" alt="Plato a la carta">
+            </div>
+
+            <div>
+                <img src="img/nosotros.jpeg" alt="Nosotros">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===========================
+         SOBRE NOSOTROS
+    ============================ -->
+
+    <section id="nosotros">
+
+        <h2>SOBRE NOSOTROS</h2>
+
+        <p>
+
+            En
+
+            <strong>BEBIDAS EXÓTICAS</strong>
+
+            combinamos las frutas con licor y así obtenemos
+            nuestro delicioso
+
+            <strong>"LICOR DE MARACUYÁ"</strong>,
+
+            demostrando la combinación de sabores exóticos
+            que ofrecemos a nuestros clientes.
+
+        </p>
+
+    </section>
+
+
+    <!-- ===========================
+         PRODUCTOS
+    ============================ -->
+
+    <section id="productos">
+
+        <h2>NUESTROS 6 PRODUCTOS ESTRELLAS</h2>
+
+        <div class="productos">
+
+
+            <!-- PRODUCTO 1 -->
+
+            <article>
+
+                <span class="etiqueta">
+                    MÁS VENDIDO
+                </span>
+
+                <img src="img/bebida exotica.jpg"
+                     alt="Bebida exótica">
+
+                <div class="informacion">
+
+                    <h3>
+                        BEBIDA CREMOSA
+                    </h3>
+
+                    <p>
+                        Refrescante y deliciosa para pasar
+                        un buen momento con los amigos.
+                    </p>
+
+                    <span class="precio">
+                        Bs. 30
+                    </span>
+
+                    <a class="btn-pedir"
+                       href="https://wa.link/nmf4ih"
+                       target="_blank">
+                        Pedir
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- PRODUCTO 2 -->
+
+            <article>
+
+                <span class="etiqueta">
+                    APETITIVO
+                </span>
+
+                <img src="img/bebida refrescante.jpg"
+                     alt="Bebida refrescante">
+
+                <div class="informacion">
+
+                    <h3>
+                        JUGOS EXÓTICOS FRUTALES
+                    </h3>
+
+                    <p>
+                        Deliciosos jugos frutales listos para
+                        degustar, elaborados con pulpa fresca
+                        de diferentes frutas tropicales.
+                    </p>
+
+                    <span class="precio">
+                        Bs. 45
+                    </span>
+
+                    <a class="btn-pedir"
+                       href="https://wa.link/nmf4ih"
+                       target="_blank">
+                        Pedir
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- PRODUCTO 3 -->
+
+            <article>
+
+                <span class="etiqueta">
+                    JUGOSA
+                </span>
+
+                <img src="img/COPA DE HELADO.jpg"
+                     alt="Copa de helado">
+
+                <div class="informacion">
+
+                    <h3>
+                        HELADOS
+                    </h3>
+
+                    <p>
+                        Deliciosos helados que harán
+                        volver a tu niñez.
+                    </p>
+
+                    <span class="precio">
+                        Bs. 32
+                    </span>
+
+                    <a class="btn-pedir"
+                       href="https://wa.link/nmf4ih"
+                       target="_blank">
+                        Pedir
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- PRODUCTO 4 -->
+
+            <article>
+
+                <span class="etiqueta">
+                    ESPECIAL
+                </span>
+
+                <img src="img/postre exotico.jpg"
+                     alt="Postre exótico de maracuyá">
+
+                <div class="informacion">
+
+                    <h3>
+                        POSTRE EXÓTICO DE MARACUYÁ
+                    </h3>
+
+                    <p>
+                        Heladitos de maracuyá, frescos y ricos
+                        de verdad. Dulces, cremosos y tropicales.
+                    </p>
+
+                    <span class="precio">
+                        Bs. 20
+                    </span>
+
+                    <a class="btn-pedir"
+                       href="https://wa.link/nmf4ih"
+                       target="_blank">
+                        Pedir
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- PRODUCTO 5 -->
+
+            <article>
+
+                <span class="etiqueta">
+                    REFRESCANTE
+                </span>
+
+                <img src="img/postre.jpg"
+                     alt="Postre de maracuyá">
+
+                <div class="informacion">
+
+                    <h3>
+                        POSTRE DE MARACUYÁ
+                    </h3>
+
+                    <p>
+                        Maracuyá con sabor tropical en postres
+                        exóticos y sensacionales. Dulce, fresco
+                        y lleno de alegría.
+                    </p>
+
+                    <span class="precio">
+                        Bs. 30
+                    </span>
+
+                    <a class="btn-pedir"
+                       href="https://wa.link/nmf4ih"
+                       target="_blank">
+                        Pedir
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- PRODUCTO 6 -->
+
+            <article>
+
+                <span class="etiqueta">
+                    PALETA DE HELADOS
+                </span>
+
+                <img src="img/HELADOS.jpg"
+                     alt="Paletas de helado">
+
+                <div class="informacion">
+
+                    <h3>
+                        PALETAS DE HELADOS
+                    </h3>
+
+                    <p>
+                        Deliciosas paletitas de helados,
+                        preparadas con la fruta más exótica
+                        de la Amazonía de nuestro país.
+                    </p>
+
+                    <span class="precio">
+                        Bs. 25
+                    </span>
+
+                    <a class="btn-pedir"
+                       href="https://wa.link/nmf4ih"
+                       target="_blank">
+                        Pedir
+                    </a>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ===========================
+         CONTACTOS Y UBICACIÓN
+    ============================ -->
+
+    <section id="contactos">
+
+        <h2>UBICACIÓN Y CONTACTO</h2>
+
+        <div>
+
+            <h3>
+                Nuestra ubicación
+            </h3>
+
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190.5185303110366!2d-64.90914808660891!3d-14.835175890197394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93dd71d6fb59a2e1%3A0x9a63bb0a85430b6e!2sLicores%20tropicales!5e1!3m2!1ses!2sbo!4v1790106831075!5m2!1ses!2sbo"
+                width="600"
+                height="450"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy">
+            </iframe>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===========================
+         PIE DE PÁGINA
+    ============================ -->
+
+    <footer>
+
+        <h3>
+            CONTÁCTENOS Y SÍGANOS
+        </h3>
+
+        <div>
+
+            <a href="https://acortar.link/VCVshF"
+               target="_blank">
+                Facebook
+            </a>
+
+            <a href="https://wa.link/nmf4ih"
+               target="_blank">
+                WhatsApp
+            </a>
+
+        </div>
+
+        <p>
+            &copy; 2026 Licorería Maracuyá - Derechos Reservados
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>
